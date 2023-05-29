@@ -8,7 +8,7 @@ const Home = () => {
         <span className="orange_gradient text-center">AI Powered Tools</span> 
       </h1>
       <p className="desc text-center">
-        Lınayser is a tool that helps you to analyze your LinkedIn profile and gives you feedback about your profile.
+        Linayser is a tool that helps you to analyze your LinkedIn profile and gives you feedback about your profile.
       </p>
 
       {/* Feed */}

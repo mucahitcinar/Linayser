@@ -3,8 +3,8 @@ import Provider from '@components/Provider';
 import '@styles/globals.css';
 
 export const metadata = {
-    title: "PromptHelper",
-    description: "Prompt helper for writing prompts",
+    title: "Lınayser",
+    description: "Lınayser LinkedIn Analizer AI Powered Tools",
 }
 
 const RootLayout = ({children}) => {
