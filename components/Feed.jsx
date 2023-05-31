@@ -2,6 +2,10 @@
 
 import {useState, useEffect} from 'react'
 import PromptCard from './PromptCard'
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import Link from 'next/link';
+import Image from 'next/image';
+
 const PromptCardList = ({data, handleTagClick})=>{
   return(
     <div className="mt-16 prompt_layout">
@@ -18,8 +22,15 @@ const PromptCardList = ({data, handleTagClick})=>{
 const Feed = () => {
   const [searchText, setSearchText] = useState("")
   const [posts, setPosts] = useState([]);
+  const [providers, setProviders] = useState(null);
+  const { data: session } = useSession();
 
-
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders();
+      setProviders(res);
+    })();
+  }, []);
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
@@ -60,12 +71,49 @@ const Feed = () => {
           list="jobs"
           onInput={handleInput}
         />
-       <datalist id="jobs">
-        <option value="Software Engineer" />
-        <option value="Graphic Designer" />
-        <option value="Data Analyst" />
-      </datalist>
+        <datalist id="jobs">
+            <option value="Yazılım Mühendisi" />
+            <option value="Grafik Tasarımcısı" />
+            <option value="Data Analist" />
+            <option value="Mimar" />
+            <option value="Makine Mühendisi" />
+            <option value="PCB Tasarımcısı" />
+            <option value="Yapay Zeka Mühendisi" />
+            <option value="Frontend Developer" />
+            <option value="Fullstack Developer" />
+            <option value="DevOps Engineer" />
+        </datalist>
+     
       </form>
+      {session?.user ? (
+          <div>
+            <Link href='/profile'>
+              <Image
+                src={session?.user.image}
+                width={37}
+                height={37}
+                className='rounded-full'
+                alt='profile'
+              />
+            </Link>
+          </div>
+        ) : (
+          <>
+            {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type='button'
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
+                  className='black_btn'
+                >
+                  Sign in With {provider.name}
+                </button>
+              ))}
+          </>
+        )}
 
       <PromptCardList
         data={posts}

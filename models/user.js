@@ -1,19 +1,51 @@
 import {Schema, model, models} from 'mongoose';
 
 const UserSchema = new Schema({
-    email: {
-        type: String,
-        unique: [true, "Email already exists!"],
-        required: [true, "Email is required!"]
-    },
-    username: {
-        type: String,
-        required: [true, 'Username is required!'],
-        match: [/^(?!.*[_.]{2})[\p{L}\d._]{5,20}(?<![_.])$/u, "Username invalid, it should contain 8-20 alphanumeric letters and be unique!"]
+  linkedinId: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: [true, "Email already exists!"],
+    required: [true, "Email is required!"]
+  },
+  profilePicture: {
+    type: String,
+    required: true,
+  },
+  skills: {
+    type: [String],
+    required: false,
+  },
+  experience: {
+    type: [
+      {
+        title: String,
+        company: String,
+        startDate: Date,
+        endDate: Date,
       },
-      image: {
-        type: String,
-      }
+    ],
+    required: false,
+  },
+  education: {
+    type: [
+      {
+        school: String,
+        degree: String,
+        fieldOfStudy: String,
+        startDate: Date,
+        endDate: Date,
+      },
+    ],
+    required: false,
+  },
 });
 
 const User = models.User || model("User", UserSchema);
