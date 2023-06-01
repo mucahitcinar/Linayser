@@ -12,10 +12,9 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    unique: [true, "Email already exists!"],
-    required: [true, "Email is required!"]
+    required: false
   },
-  profilePicture: {
+  image: {
     type: String,
     required: true,
   },

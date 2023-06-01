@@ -6,18 +6,7 @@ import { connectToDB } from "@utils/database";
 
 const handler = NextAuth({
     providers: [
-        // GoogleProvider({
-        //     clientId: process.env.GOOGLE_CLIENT_ID,
-        //     clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        // }),
         LinkedInProvider({
-            authorization:{
-                params:{
-                    response_type:"code",
-                    client_id:process.env.LINKEDIN_CLIENT_ID,
-                    redirect_uri:"http://localhost:3000/api/auth/callback/linkedin",
-                }
-            },
             clientId: process.env.LINKEDIN_CLIENT_ID,
             clientSecret: process.env.LINKEDIN_CLIENT_SECRET
         })
@@ -27,9 +16,7 @@ const handler = NextAuth({
             const sessionUser = await User.findOne({
                 email: session.user.email
             })
-    
             session.user.id = sessionUser._id.toString();
-    
             return session;
         },
         async signIn({profile}) {
@@ -38,16 +25,16 @@ const handler = NextAuth({
     
                 //check if user exists
                 const userExists = await User.findOne({
-                    email: profile.email
+                    email: profile.email //Not correct
                 })
     
                 //if not, create user
                 if (!userExists){
                     await User.create({
                         linkedinId:profile.id,
-                        email: profile.email,
-                        name: profile.name,
-                        profilePicture: profile.image
+                        email:profile.email, //Not correct
+                        name: `${profile.localizedFirstName} ${profile.localizedLastName}`,
+                        image: profile.profilePicture?.["displayImage~"]?.elements?.[0]?.identifiers?.[0]?.identifier
                     })
                 }
                 return true;
