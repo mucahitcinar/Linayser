@@ -5,6 +5,7 @@ import PromptCard from './PromptCard'
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import Link from 'next/link';
 import Image from 'next/image';
+import { saveAs } from 'file-saver';
 
 const PromptCardList = ({data, handleTagClick})=>{
   return(
@@ -24,7 +25,15 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [providers, setProviders] = useState(null);
   const { data: session } = useSession();
+  const [apiData, setApiData] = useState(null);
 
+  const handleDownloadPDF = () => {
+    // API'den gelen bilgileri kullanarak PDF dosyasını oluşturma ve indirme işlemleri burada gerçekleştirilir
+    // Örnek olarak, bir PDF oluşturup indirme işlemi:
+    const pdfContent = generatePDFContent(apiData); // API'den gelen verilere dayanarak PDF içeriği oluşturulur
+    const pdfBlob = new Blob([pdfContent], { type: 'application/pdf' });
+    saveAs(pdfBlob, 'api_data.pdf');
+  };
   useEffect(() => {
     (async () => {
       const res = await getProviders();
@@ -119,6 +128,29 @@ const Feed = () => {
               ))}
           </>
         )}
+          {/* API'den gelen bilgileri görüntülemek için yazı alanı */}
+          <div className="glassmorphism-container">
+                {apiData ? (
+                  <div className="api-data-container">
+                    {/* API'den gelen bilgileri burada görüntüleyebilirsiniz */}
+                  </div>
+                ) : (
+                  <div className="api-data-placeholder">
+                    hey HFHDHGDHDFJDJHD
+                    HFHFHFJHFGKJGKKHGKU
+                    HFJFJHFJHJHFJHFJHFJHHGDDGHHDG
+                    {/* API'den gelen bilgiler henüz yüklenmediğinde burada bir yer tutucu gösterilebilir */}
+                  </div>
+                )}
+                {apiData && (
+                  <button
+                    className="download-btn"
+                    onClick={handleDownloadPDF}
+                  >
+                    Download as PDF
+                  </button>
+                )}
+      </div>
 
       <PromptCardList
         data={posts}
