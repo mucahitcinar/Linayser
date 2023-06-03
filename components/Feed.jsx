@@ -58,7 +58,7 @@ const Feed = () => {
 
     fetchPosts();
   },[]);
-
+    
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -88,13 +88,13 @@ const Feed = () => {
       {session?.user ? (
           <div>
             <Link href='/profile'>
-              <Image
-                src={session?.user.image}
+              {/* <Image
+                src={session.user.user}
                 width={37}
                 height={37}
                 className='rounded-full'
                 alt='profile'
-              />
+              /> */}
             </Link>
           </div>
         ) : (

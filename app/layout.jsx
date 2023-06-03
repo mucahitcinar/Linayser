@@ -7,8 +7,9 @@ export const metadata = {
     description: "Lınayser LinkedIn Analizer AI Powered Tools",
 }
 
-const RootLayout = ({children}) => {
-  return (
+const RootLayout = ({children},  session, ...pageProps) => {
+  
+    return (
   <html lang="en">
     <body>
         <Provider>
