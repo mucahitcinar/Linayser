@@ -7,7 +7,7 @@ const readFile = utils.promisify(fs.readFile)
 async function getTemplateHtml() {
 console.log("Loading template file in memory")
 try {
-const invoicePath = path.resolve("C:/Users/mücahit/Documents/GitHub/Linayser/components/PDF");
+const invoicePath = path.resolve("C:/Users/mücahit/Documents/GitHub/Linayser/components/PDF.html");
 return await readFile(invoicePath, 'utf8');
 } catch (err) {
 return Promise.reject("Could not load html template");
