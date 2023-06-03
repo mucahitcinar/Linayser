@@ -83,18 +83,23 @@ const Feed = () => {
             <option value="Fullstack Developer" />
             <option value="DevOps Engineer" />
         </datalist>
-     
+        {session?.user &&
+        <button
+            className="absolute right-0 h-full px-4 font-medium text-white bg-blue-500 hover:bg-blue-600">
+            Show Results
+          </button>
+        }
       </form>
       {session?.user ? (
           <div>
             <Link href='/profile'>
-              {/* <Image
-                src={session.user.user}
+              <img
+                src={session.user.image}
                 width={37}
                 height={37}
                 className='rounded-full'
                 alt='profile'
-              /> */}
+              />
             </Link>
           </div>
         ) : (
